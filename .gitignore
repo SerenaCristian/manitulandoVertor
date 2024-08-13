@@ -1,0 +1,18 @@
+# Arquivos de compilação e saída
+bin/
+obj/
+
+# Arquivos de configuração do Visual Studio
+.vs/
+*.user
+*.suo
+*.cache
+*.dll
+*.pdb
+
+# Arquivos de configuração do Rider
+.idea/
+
+# Arquivos de compilação e saída específicos para o Rider
+*/bin/
+*/obj/
