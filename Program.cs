@@ -26,8 +26,8 @@ class Program
         Console.WriteLine("\nNomes no vetor após a ordenação:");
         ExibirNomes();
 
-        // Remover um nome
-        //RemoverNomePorIndice(3); 
+        
+        RemoverNomePorIndice(3); 
 
         Console.WriteLine("\nNomes no vetor após remover o nome no índice 3:");
         ExibirNomes();
