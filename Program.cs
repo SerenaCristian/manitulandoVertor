@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 class Program
 {
@@ -7,16 +8,18 @@ class Program
 
     static void Main(string[] args)
     {
+
+        
+        AdicionarNome(nomes, "Lucas");
+        AdicionarNome(nomes, "Joaquim");
+        AdicionarNome(nomes, "Rafael");
+        AdicionarNome(nomes, "Maria");
+        AdicionarNome(nomes, "Bruno");
+
         NomePorIndice("Ana", 0);
         NomePorIndice("Carlos", 2);
         NomePorIndice("Bruno", 1);
         NomePorIndice("Daniela", 3);
-        NomePorIndice("Eduardo", 4);
-        NomePorIndice("Fernanda", 5);
-        NomePorIndice("Gabriel", 6);
-        NomePorIndice("Helena", 7);
-        NomePorIndice("Isabela", 8);
-        NomePorIndice("João", 9);
 
         Console.WriteLine("Nomes no vetor antes da ordenação:");
         ExibirNomes();
@@ -27,7 +30,7 @@ class Program
         ExibirNomes();
 
         
-        RemoverNomePorIndice(3); 
+        RemoverNomePorIndice(3);
 
         Console.WriteLine("\nNomes no vetor após remover o nome no índice 3:");
         ExibirNomes();
@@ -36,32 +39,80 @@ class Program
         Console.ReadKey();
     }
 
-    static void NomePorIndice(string nome, int indice)
+    public static void AdicionarNome(string[] listaNomes, string nome)
     {
-        if (indice >= 0 && indice < tamanhoVetor)
+        for (int i = 0; i < listaNomes.Length; i++)
         {
-            if (nomes[indice] == null)
+            if (string.IsNullOrEmpty(listaNomes[i]))
             {
-                nomes[indice] = nome;
-                Console.WriteLine($"Nome '{nome}' adicionado no índice {indice}.");
-            }
-            else
-            {
-                Console.WriteLine($"O índice {indice} já está ocupado pelo nome '{nomes[indice]}'.");
+                listaNomes[i] = nome;
+                Console.WriteLine($"'{nome}' foi adicionado!");
+                return;
             }
         }
-        else
+        Console.WriteLine("Lista cheia. Não é possível adicionar mais nomes.");
+    }
+
+    public static void NomePorIndice(string nome, int indice)
+    {
+        if (indice < 0 || indice >= nomes.Length)
         {
-            Console.WriteLine($"Índice {indice} inválido. Deve estar entre 0 e {tamanhoVetor - 1}.");
+            Console.WriteLine($"Índice inválido. Escolha um índice entre 0 e {nomes.Length - 1}");
+            return;
         }
+
+        bool vetorCheio = true;
+        for (int i = 0; i < nomes.Length; i++)
+        {
+            if (string.IsNullOrEmpty(nomes[i]))
+            {
+                vetorCheio = false;
+                break;
+            }
+        }
+
+        if (vetorCheio)
+        {
+            Console.WriteLine("Lista cheia. Não é possível adicionar mais nomes.");
+            return;
+        }
+
+        for (int i = nomes.Length - 1; i > indice; i--)
+        {
+            nomes[i] = nomes[i - 1];
+        }
+
+        nomes[indice] = nome;
+        Console.WriteLine($"Nome '{nome}' adicionado com sucesso no índice {indice}!");
     }
 
     static void ExibirNomes()
     {
-        foreach (var nome in nomes)
+        ImprimeNomes(nomes);
+    }
+
+    public static void ImprimeNomes(string[] nomes)
+    {
+        bool vetorNull = false;
+        for (int i = 0; i < nomes.Length; i++)
         {
-            if (nome != null)
-                Console.WriteLine(nome);
+            if (string.IsNullOrEmpty(nomes[i]))
+            {
+                vetorNull = true;
+                break;
+            }
+        }
+
+        if (nomes.All(n => string.IsNullOrWhiteSpace(n)))
+        {
+            Console.WriteLine("Lista vazia");
+        }
+        else
+        {
+            for (int i = 0; i < nomes.Length; i++)
+            {
+                Console.WriteLine(nomes[i]);
+            }
         }
     }
 
@@ -102,3 +153,4 @@ class Program
         }
     }
 }
+
